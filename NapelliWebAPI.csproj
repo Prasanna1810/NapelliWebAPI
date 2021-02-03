@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>C:\NapelliProject\Build\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />
+    <PackageReference Include="MySql.Data" Version="8.0.23" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+    <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="NapelliFrameWork">
+      <HintPath>..\Build\netstandard2.0\NapelliFrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="NapelliServerFrameWork">
+      <HintPath>..\Build\netstandard2.0\NapelliServerFrameWork.dll</HintPath>
+    </Reference>
+    <Reference Include="NapelliVO">
+      <HintPath>..\Build\netstandard2.0\NapelliVO.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
+</Project>
