@@ -190,6 +190,31 @@ namespace NapelliWebAPI.Models
                 return null;
             }
         }
+        public string PackageCupons(PersonalEduVO perEduVO)
+        {
+            UserInfo uInfo = new UserInfo();
+            User uObj = new User(uInfo);
+            try
+            {
+                string count = uObj.PackageCupons(perEduVO);
+                if (uObj.status.errcode != 0)
+                {
+                    errorcode = uObj.status.errcode;
+                    error = uObj.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
         public DataTable GetCaste()
         {
             UserInfo uinfo = new UserInfo();
@@ -447,6 +472,31 @@ namespace NapelliWebAPI.Models
             try
             {
                 DataTable dt = objUser.GetSubCast();
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public DataTable GeneralSearch(string gender, int age_from, int age_to, int religion)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GeneralSearch(gender, age_from, age_to, religion);
                 if (objUser.status.errcode != 0)
                 {
                     errorcode = objUser.status.errcode;

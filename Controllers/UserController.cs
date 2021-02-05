@@ -173,6 +173,33 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+        [HttpPost, Route("PackageCupons")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult PackageCupons(PersonalEduVO perEduVO)
+        {
+            UserDetailsModel umodel = new UserDetailsModel();
+            try
+            {
+                string count = umodel.PackageCupons(perEduVO);
+                if (umodel.errorcode != 0)
+                {
+                    return Ok(new { Error = umodel.error });
+                }
+                else if (count == "Inserted")
+                {
+                    return Ok(new { sucess = "Inserted Successfully" });
+                }
+                else
+                {
+                    return Ok(new { error = "Not inserted" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
         [HttpGet, Route("GetCaste")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetCaste()
@@ -471,7 +498,33 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
-
+        [HttpGet, Route("GeneralSearch")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GeneralSearch(string gender, int age_from, int age_to, int religion)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GeneralSearch(gender, age_from, age_to, religion);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { info = "No Record found" });
+                }
+                else
+                {
+                    return Ok(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
         [HttpGet, Route("SendEmail")]
         //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult SendEmail(string FromEmailID, string ToEmailIds, string subject, string htmlContent)
