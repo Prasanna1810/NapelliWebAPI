@@ -31,8 +31,8 @@ C:\NapelliProject\Build\netcoreapp3.1\NapelliWebAPI.runtimeconfig.json
 C:\NapelliProject\Build\netcoreapp3.1\NapelliWebAPI.runtimeconfig.dev.json
 C:\NapelliProject\Build\netcoreapp3.1\NapelliWebAPI.dll
 C:\NapelliProject\Build\netcoreapp3.1\NapelliWebAPI.pdb
-C:\NapelliProject\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.csproj.CoreCompileInputs.cache
-C:\NapelliProject\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.MvcApplicationPartsAssemblyInfo.cache
 C:\NapelliProject\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.dll
 C:\NapelliProject\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.pdb
 C:\NapelliProject\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.genruntimeconfig.cache
+C:\NapelliProject\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.csproj.CoreCompileInputs.cache
+C:\NapelliProject\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.MvcApplicationPartsAssemblyInfo.cache

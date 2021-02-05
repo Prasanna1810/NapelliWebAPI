@@ -40,7 +40,32 @@ namespace NapelliWebAPI.Models
                 return null;
             }
         }
-        public string CreateUser(UserRegisterVO uVO)
+        public DataTable CheckMail(string Email_id, string Mobile_number)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.CheckMail(Email_id, Mobile_number);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public string RegisterUser(UserRegisterVO uVO)
         {
             UserInfo uInfo = new UserInfo();
             User uObj = new User(uInfo);

@@ -30,7 +30,7 @@ namespace NapelliWebAPI.Controllers
         public IActionResult Login(UserRegisterVO urVO)
         {
             String hostaddress = Request.Host.Value;
-            if (urVO.UserName == null)
+            if (urVO.Email_id == null)
             {
                 return BadRequest("Invalid request");
             }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "SnNLQZ7xe5j7q6d6LP2aTHlHSZ6JiOGUBljpNArKBVlVElm+WfWiBq8vxohkfNkR9vutrzNJUGG4VxQxfHMC8g==",
+  "dgSpecHash": "rpabh0WzKM43mXdw3SYZraAEGOSs4GZSIZvbjGJdbyd4b/PV+Jy40hH6Qgp+Pkn553N7O2GNkoCfeejM4Ul0lA==",
   "success": true,
   "projectFilePath": "C:\\NapelliProject\\NapelliWebAPI\\NapelliWebAPI.csproj",
   "expectedPackageFiles": [
@@ -24,8 +24,10 @@
     "C:\\Users\\win10-one\\.nuget\\packages\\mysql.data\\8.0.23\\mysql.data.8.0.23.nupkg.sha512",
     "C:\\Users\\win10-one\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
     "C:\\Users\\win10-one\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
+    "C:\\Users\\win10-one\\.nuget\\packages\\sendgrid\\9.22.0\\sendgrid.9.22.0.nupkg.sha512",
     "C:\\Users\\win10-one\\.nuget\\packages\\ssh.net\\2020.0.0-beta1\\ssh.net.2020.0.0-beta1.nupkg.sha512",
     "C:\\Users\\win10-one\\.nuget\\packages\\sshnet.security.cryptography\\1.3.0\\sshnet.security.cryptography.1.3.0.nupkg.sha512",
+    "C:\\Users\\win10-one\\.nuget\\packages\\starkbank-ecdsa\\1.2.0\\starkbank-ecdsa.1.2.0.nupkg.sha512",
     "C:\\Users\\win10-one\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\win10-one\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",
     "C:\\Users\\win10-one\\.nuget\\packages\\system.collections.concurrent\\4.3.0\\system.collections.concurrent.4.3.0.nupkg.sha512",

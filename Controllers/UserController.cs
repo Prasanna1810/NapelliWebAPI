@@ -49,7 +49,8 @@ namespace NapelliWebAPI.Controllers
             UserDetailsModel umodel = new UserDetailsModel();
             try
             {
-                string count = umodel.CreateUser(uVO);
+                DataTable dt = umodel.CheckMail(uVO.Email_id, uVO.Mobile_number);
+                string count = umodel.RegisterUser(uVO);
                 if (umodel.errorcode != 0)
                 {
                     return Ok(new { Error = umodel.error });
@@ -469,6 +470,23 @@ namespace NapelliWebAPI.Controllers
             {
                 return Ok(new { Error = ex.Message });
             }
+        }
+
+        [HttpGet, Route("SendEmail")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult SendEmail(string FromEmailID, string ToEmailIds, string subject, string htmlContent)
+        {
+            SendGridModel email = new SendGridModel();
+            var result = email.SendEmail(FromEmailID, ToEmailIds, subject, htmlContent);
+            return Ok(new { info = result });
+            //if (result.IsCompleted == true)
+            //{
+            //    return Ok(new { info = "Mail not sent" });
+            //}
+            //else
+            //{
+            //    return Ok(new { info = "Mail sent successfully" });
+            //}           
         }
     }
 }
