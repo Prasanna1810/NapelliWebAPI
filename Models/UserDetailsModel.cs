@@ -190,13 +190,38 @@ namespace NapelliWebAPI.Models
                 return null;
             }
         }
-        public string PackageCupons(PersonalEduVO perEduVO)
+        public DataTable PackageCupons(int user_id, int package_id, string cupon_code)
         {
             UserInfo uInfo = new UserInfo();
             User uObj = new User(uInfo);
             try
             {
-                string count = uObj.PackageCupons(perEduVO);
+                DataTable dt = uObj.PackageCupons(user_id, package_id, cupon_code);
+                if (uObj.status.errcode != 0)
+                {
+                    errorcode = uObj.status.errcode;
+                    error = uObj.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public string InsertImage(ImageVO iVO)
+        {
+            UserInfo uInfo = new UserInfo();
+            User uObj = new User(uInfo);
+            try
+            {
+                string count = uObj.InsertImage(iVO);
                 if (uObj.status.errcode != 0)
                 {
                     errorcode = uObj.status.errcode;

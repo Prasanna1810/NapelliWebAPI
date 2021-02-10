@@ -50,6 +50,10 @@ namespace NapelliWebAPI.Controllers
             try
             {
                 DataTable dt = umodel.CheckMail(uVO.Email_id, uVO.Mobile_number);
+                if (dt.Rows.Count != 0)
+                {
+                    return Ok(new { error = "Already exists" });
+                }
                 string count = umodel.RegisterUser(uVO);
                 if (umodel.errorcode != 0)
                 {
@@ -175,12 +179,44 @@ namespace NapelliWebAPI.Controllers
         }
         [HttpPost, Route("PackageCupons")]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        public IActionResult PackageCupons(PersonalEduVO perEduVO)
+        public IActionResult PackageCupons(int user_id, int package_id, string cupon_code)
+        {
+            UserDetailsModel umodel = new UserDetailsModel();
+
+            try
+            {
+                if (cupon_code == "" || cupon_code == string.Empty || cupon_code == null)
+                {
+                    cupon_code = "NA";
+                }
+                
+                DataTable dt = umodel.PackageCupons(user_id, package_id, cupon_code);
+                if (umodel.errorcode != 0)
+                {
+                    return Ok(new { Error = umodel.error });
+                }
+                //else if (dt.Rows.Count == 1)
+                //{
+                //    return Ok(new { info = "Inserted Successfully" });
+                //}
+                else
+                {
+                    return Ok(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+        [HttpPost, Route("InsertImage")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult InsertImage(ImageVO iVO)
         {
             UserDetailsModel umodel = new UserDetailsModel();
             try
             {
-                string count = umodel.PackageCupons(perEduVO);
+                string count = umodel.InsertImage(iVO);
                 if (umodel.errorcode != 0)
                 {
                     return Ok(new { Error = umodel.error });
@@ -442,8 +478,7 @@ namespace NapelliWebAPI.Controllers
             {
                 return Ok(new { Error = ex.Message });
             }
-        }
-       
+        }       
         [HttpGet, Route("GetStates")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetStates()
