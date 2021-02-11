@@ -515,6 +515,81 @@ namespace NapelliWebAPI.Models
                 return null;
             }
         }
+        public DataTable GetPackage()
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetPackage();
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public DataTable GetPackageDetails(int pack_id)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetPackageDetails(pack_id);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public DataTable GetPackCoupCalculation(int pack_id, string coupCode)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetPackCoupCalculation(pack_id, coupCode);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
         public DataTable GeneralSearch(string gender, int age_from, int age_to, int religion)
         {
             UserInfo uinfo = new UserInfo();
@@ -531,6 +606,231 @@ namespace NapelliWebAPI.Models
                 else
                 {
                     return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public DataTable GetFamilyDetails(int user_id)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetFamilyDetails(user_id);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public DataTable GetPersonalEducationalDetails(int user_id)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetPersonalEducationalDetails(user_id);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public DataTable GetProfessionalDetails(int user_id)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetProfessionalDetails(user_id);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public DataTable GetPartnerPreferencesDetails(int user_id)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetPartnerPreferencesDetails(user_id);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public DataTable GetPackageCuponsDetails(int user_id)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetPackageCuponsDetails(user_id);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public string UpdateFamily(FamilyVO fVO)
+        {
+            UserInfo uInfo = new UserInfo();
+            User uObj = new User(uInfo);
+            try
+            {
+                string count = uObj.UpdateFamily(fVO);
+                if (uObj.status.errcode != 0)
+                {
+                    errorcode = uObj.status.errcode;
+                    error = uObj.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public string UpdateProfessional(ProfessionalVo pVO)
+        {
+            UserInfo uInfo = new UserInfo();
+            User uObj = new User(uInfo);
+            try
+            {
+                string count = uObj.UpdateProfessional(pVO);
+                if (uObj.status.errcode != 0)
+                {
+                    errorcode = uObj.status.errcode;
+                    error = uObj.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public string UpdatePartnerPreference(PartnerPrefVO parVO)
+        {
+            UserInfo uInfo = new UserInfo();
+            User uObj = new User(uInfo);
+            try
+            {
+                string count = uObj.UpdatePartnerPreference(parVO);
+                if (uObj.status.errcode != 0)
+                {
+                    errorcode = uObj.status.errcode;
+                    error = uObj.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public string UpdatePersonalEdu(PersonalEduVO perEduVO)
+        {
+            UserInfo uInfo = new UserInfo();
+            User uObj = new User(uInfo);
+            try
+            {
+                string count = uObj.UpdatePersonalEdu(perEduVO);
+                if (uObj.status.errcode != 0)
+                {
+                    errorcode = uObj.status.errcode;
+                    error = uObj.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return count;
                 }
             }
             catch (Exception ex)

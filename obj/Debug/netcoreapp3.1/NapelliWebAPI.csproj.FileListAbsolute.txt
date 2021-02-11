@@ -24,7 +24,6 @@ C:\NapelliProject\NapelliWebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstan
 C:\NapelliProject\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.csproj.CopyComplete
 C:\NapelliProject\Build\netcoreapp3.1\appsettings.Development.json
 C:\NapelliProject\Build\netcoreapp3.1\appsettings.json
-C:\NapelliProject\Build\netcoreapp3.1\Properties\launchSettings.json
 C:\NapelliProject\Build\netcoreapp3.1\NapelliWebAPI.exe
 C:\NapelliProject\Build\netcoreapp3.1\NapelliWebAPI.deps.json
 C:\NapelliProject\Build\netcoreapp3.1\NapelliWebAPI.runtimeconfig.json
@@ -36,3 +35,16 @@ C:\NapelliProject\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.pdb
 C:\NapelliProject\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.genruntimeconfig.cache
 C:\NapelliProject\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.csproj.CoreCompileInputs.cache
 C:\NapelliProject\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.csprojAssemblyReference.cache
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.AssemblyInfoInputs.cache
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.AssemblyInfo.cs
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.csproj.CoreCompileInputs.cache
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.MvcApplicationPartsAssemblyInfo.cache
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\staticwebassets\NapelliWebAPI.StaticWebAssets.Manifest.cache
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\staticwebassets\NapelliWebAPI.StaticWebAssets.xml
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\scopedcss\bundle\NapelliWebAPI.styles.css
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.RazorTargetAssemblyInfo.cache
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.csproj.CopyComplete
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.dll
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.pdb
+D:\VSCode\NapelliWebAPI\obj\Debug\netcoreapp3.1\NapelliWebAPI.genruntimeconfig.cache

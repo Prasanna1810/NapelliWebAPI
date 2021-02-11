@@ -4161,19 +4161,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\win10-one\\.nuget\\packages\\": {}
+    "C:\\Users\\thiru\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\NapelliProject\\NapelliWebAPI\\NapelliWebAPI.csproj",
+      "projectUniqueName": "D:\\VSCode\\NapelliWebAPI\\NapelliWebAPI.csproj",
       "projectName": "NapelliWebAPI",
-      "projectPath": "C:\\NapelliProject\\NapelliWebAPI\\NapelliWebAPI.csproj",
-      "packagesPath": "C:\\Users\\win10-one\\.nuget\\packages\\",
-      "outputPath": "C:\\NapelliProject\\NapelliWebAPI\\obj\\",
+      "projectPath": "D:\\VSCode\\NapelliWebAPI\\NapelliWebAPI.csproj",
+      "packagesPath": "C:\\Users\\thiru\\.nuget\\packages\\",
+      "outputPath": "D:\\VSCode\\NapelliWebAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\win10-one\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\thiru\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4185,6 +4185,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -4196,6 +4197,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
@@ -4240,7 +4242,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -73,6 +73,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
         [HttpPost, Route("FamilyDetails")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult FamilyDetails(FamilyVO fVO)
@@ -99,6 +100,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
         [HttpPost, Route("ProfessionalDetails")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult ProfessionalDetails(ProfessionalVo pVO)
@@ -125,6 +127,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
         [HttpPost, Route("PartnerPreference")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult PartnerPreference(PartnerPrefVO parVO)
@@ -151,6 +154,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
         [HttpPost, Route("PersonalEducation")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult PersonalEducation(PersonalEduVO perEduVO)
@@ -177,6 +181,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
         [HttpPost, Route("PackageCupons")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult PackageCupons(int user_id, int package_id, string cupon_code)
@@ -209,6 +214,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
         [HttpPost, Route("InsertImage")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult InsertImage(ImageVO iVO)
@@ -344,6 +350,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
         [HttpGet, Route("GetLanguage")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetLanguage()
@@ -371,6 +378,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
         [HttpGet, Route("GetQualification")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetQualification()
@@ -398,6 +406,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
         [HttpGet, Route("GetRasi")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetRasi()
@@ -425,7 +434,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
-        [HttpGet, Route("GetReligion")]
+
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetReligion()
         {
@@ -452,6 +461,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
         [HttpGet, Route("GetStar")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetStar()
@@ -479,6 +489,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }       
+
         [HttpGet, Route("GetStates")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetStates()
@@ -506,6 +517,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
         [HttpGet, Route("GetSubCast")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetSubCast()
@@ -533,6 +545,91 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+        
+        [HttpGet, Route("GetPackage")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetPackage()
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetPackage();
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { info = "No Record found" });
+                }
+                else
+                {
+                    return Ok(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpGet, Route("GetPackageDetails")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetPackageDetails(int pack_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetPackageDetails(pack_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { info = "No Record found" });
+                }
+                else
+                {
+                    return Ok(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpGet, Route("GetPackCoupCalculation")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetPackCoupCalculation(int pack_id, string coupCode)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetPackCoupCalculation(pack_id, coupCode);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { info = "No Record found" });
+                }
+                else
+                {
+                    return Ok(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
         [HttpGet, Route("GeneralSearch")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GeneralSearch(string gender, int age_from, int age_to, int religion)
@@ -560,6 +657,7 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
         [HttpGet, Route("SendEmail")]
         //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult SendEmail(string FromEmailID, string ToEmailIds, string subject, string htmlContent)
@@ -575,6 +673,253 @@ namespace NapelliWebAPI.Controllers
             //{
             //    return Ok(new { info = "Mail sent successfully" });
             //}           
+        }
+
+        [HttpGet, Route("GetFamilyDetails")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetFamilyDetails(int user_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetFamilyDetails(user_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { info = "No Record found" });
+                }
+                else
+                {
+                    return Ok(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpGet, Route("GetPersonalEducationalDetails")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetPersonalEducationalDetails(int user_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetPersonalEducationalDetails(user_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { info = "No Record found" });
+                }
+                else
+                {
+                    return Ok(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpGet, Route("GetProfessionalDetails")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetProfessionalDetails(int user_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetProfessionalDetails(user_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { info = "No Record found" });
+                }
+                else
+                {
+                    return Ok(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpGet, Route("GetPartnerPreferencesDetails")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetPartnerPreferencesDetails(int user_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetProfessionalDetails(user_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { info = "No Record found" });
+                }
+                else
+                {
+                    return Ok(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+        [HttpGet, Route("GetPackageCuponsDetails")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetPackageCuponsDetails(int user_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetPackageCuponsDetails(user_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { info = "No Record found" });
+                }
+                else
+                {
+                    return Ok(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpPut, Route("UpdateFamily")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult UpdateFamily(FamilyVO fVO)
+        {
+            UserDetailsModel umodel = new UserDetailsModel();
+            try
+            {
+                string count = umodel.UpdateFamily(fVO);
+                if (umodel.errorcode != 0)
+                {
+                    return Ok(new { Error = umodel.error });
+                }
+                else if (count == "Updated")
+                {
+                    return Ok(new { sucess = "Updated Successfully" });
+                }
+                else
+                {
+                    return Ok(new { error = "Not Updated" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpPut, Route("UpdateProfessional")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult UpdateProfessional(ProfessionalVo pVO)
+        {
+            UserDetailsModel umodel = new UserDetailsModel();
+            try
+            {
+                string count = umodel.UpdateProfessional(pVO);
+                if (umodel.errorcode != 0)
+                {
+                    return Ok(new { Error = umodel.error });
+                }
+                else if (count == "Updated")
+                {
+                    return Ok(new { sucess = "Updated Successfully" });
+                }
+                else
+                {
+                    return Ok(new { error = "Not Updated" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpPut, Route("UpdatePartnerPreference")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult UpdatePartnerPreference(PartnerPrefVO parVO)
+        {
+            UserDetailsModel umodel = new UserDetailsModel();
+            try
+            {
+                string count = umodel.UpdatePartnerPreference(parVO);
+                if (umodel.errorcode != 0)
+                {
+                    return Ok(new { Error = umodel.error });
+                }
+                else if (count == "Updated")
+                {
+                    return Ok(new { sucess = "Updated Successfully" });
+                }
+                else
+                {
+                    return Ok(new { error = "Not Updated" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpPut, Route("UpdatePersonalEdu")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult UpdatePersonalEdu(PersonalEduVO perEduVO)
+        {
+            UserDetailsModel umodel = new UserDetailsModel();
+            try
+            {
+                string count = umodel.UpdatePersonalEdu(perEduVO);
+                if (umodel.errorcode != 0)
+                {
+                    return Ok(new { Error = umodel.error });
+                }
+                else if (count == "Updated")
+                {
+                    return Ok(new { sucess = "Updated Successfully" });
+                }
+                else
+                {
+                    return Ok(new { error = "Not Updated" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
         }
     }
 }
