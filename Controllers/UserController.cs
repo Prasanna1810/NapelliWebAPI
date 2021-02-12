@@ -759,6 +759,7 @@ namespace NapelliWebAPI.Controllers
             }
         }
 
+
         [HttpGet, Route("GetPartnerPreferencesDetails")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetPartnerPreferencesDetails(int user_id)
@@ -786,6 +787,35 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+
+        [HttpGet, Route("GetImages")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetImages(int user_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetImages(user_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { info = "No Record found" });
+                }
+                else
+                {
+                    return Ok(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
         [HttpGet, Route("GetPackageCuponsDetails")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetPackageCuponsDetails(int user_id)
@@ -914,6 +944,61 @@ namespace NapelliWebAPI.Controllers
                 else
                 {
                     return Ok(new { error = "Not Updated" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpPut, Route("UpdateImage")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult UpdateImage(ImageVO iVO)
+        {
+            UserDetailsModel umodel = new UserDetailsModel();
+            try
+            {
+                string count = umodel.UpdateImage(iVO);
+                if (umodel.errorcode != 0)
+                {
+                    return Ok(new { Error = umodel.error });
+                }
+                else if (count == "Updated")
+                {
+                    return Ok(new { sucess = "Updated Successfully" });
+                }
+                else
+                {
+                    return Ok(new { error = "Not Updated" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpGet, Route("ViewProfile")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult ViewProfile(int user_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.ViewProfile(user_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { info = "No Record found" });
+                }
+                else
+                {
+                    return Ok(dt);
                 }
             }
             catch (Exception ex)

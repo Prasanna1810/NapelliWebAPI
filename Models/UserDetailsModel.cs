@@ -715,6 +715,31 @@ namespace NapelliWebAPI.Models
                 return null;
             }
         }
+        public DataTable GetImages(int user_id)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetImages(user_id);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
         public DataTable GetPackageCuponsDetails(int user_id)
         {
             UserInfo uinfo = new UserInfo();
@@ -831,6 +856,56 @@ namespace NapelliWebAPI.Models
                 else
                 {
                     return count;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public string UpdateImage(ImageVO iVO)
+        {
+            UserInfo uInfo = new UserInfo();
+            User uObj = new User(uInfo);
+            try
+            {
+                string count = uObj.UpdateImage(iVO);
+                if (uObj.status.errcode != 0)
+                {
+                    errorcode = uObj.status.errcode;
+                    error = uObj.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return count;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public DataTable ViewProfile(int user_id)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.ViewProfile(user_id);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
                 }
             }
             catch (Exception ex)
