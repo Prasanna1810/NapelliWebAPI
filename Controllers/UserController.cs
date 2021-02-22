@@ -15,25 +15,25 @@ namespace NapelliWebAPI.Controllers
     public class UserController : Controller
     {
         [HttpPost, Route("UserLogin")]
-        [Authorize(AuthenticationSchemes = "Bearer")]        
-        public IActionResult UserLogin(UserRegisterVO urVO)
+        //[Authorize(AuthenticationSchemes = "Bearer")]        
+        public IActionResult UserLogin(UserRegisterVO rVO)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
             DataTable dt = new DataTable();
             try
             {
-                dt = objUserMol.UserLogin(urVO);
+                dt = objUserMol.UserLogin(rVO);
                 if (objUserMol.errorcode != 0)
                 {
                     return Ok(new { Error = objUserMol.error });
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "Invalid Cradentials", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -52,7 +52,7 @@ namespace NapelliWebAPI.Controllers
                 DataTable dt = umodel.CheckMail(uVO.Email_id, uVO.Mobile_number);
                 if (dt.Rows.Count != 0)
                 {
-                    return Ok(new { error = "Already exists" });
+                    return Ok(new { message = "Exists", responseStatus = 2, result = "Email/Mobile Exists" });
                 }
                 string count = umodel.RegisterUser(uVO);
                 if (umodel.errorcode != 0)
@@ -61,11 +61,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (count == "Inserted")
                 {
-                    return Ok(new { sucess = "Inserted Successfully" });
+                    return Ok(new { message = "Success", responseStatus = 1, result = "Inserted Successfully" });
                 }
                 else
                 {
-                    return Ok(new { error = "Not inserted" });
+                    return Ok(new { message = "UnSuccess", responseStatus = 0, result = "Not inserted" });
                 }
             }
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpPost, Route("FamilyDetails")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult FamilyDetails(FamilyVO fVO)
         {
             UserDetailsModel umodel = new UserDetailsModel();
@@ -88,11 +88,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (count == "Inserted")
                 {
-                    return Ok(new { sucess = "Inserted Successfully" });
+                    return Ok(new { message = "Success", responseStatus = 1, result = "Inserted Successfully" });
                 }
                 else
                 {
-                    return Ok(new { error = "Not inserted" });
+                    return Ok(new { message = "UnSuccess", responseStatus = 0, result = "Not inserted" });
                 }
             }
             catch (Exception ex)
@@ -102,7 +102,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpPost, Route("ProfessionalDetails")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult ProfessionalDetails(ProfessionalVo pVO)
         {
             UserDetailsModel umodel = new UserDetailsModel();
@@ -115,11 +115,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (count == "Inserted")
                 {
-                    return Ok(new { sucess = "Inserted Successfully" });
+                    return Ok(new { message = "Success", responseStatus = 1, result = "Inserted Successfully" });
                 }
                 else
                 {
-                    return Ok(new { error = "Not inserted" });
+                    return Ok(new { message = "UnSuccess", responseStatus = 0, result = "Not inserted" });
                 }
             }
             catch (Exception ex)
@@ -129,7 +129,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpPost, Route("PartnerPreference")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult PartnerPreference(PartnerPrefVO parVO)
         {
             UserDetailsModel umodel = new UserDetailsModel();
@@ -142,11 +142,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (count == "Inserted")
                 {
-                    return Ok(new { sucess = "Inserted Successfully" });
+                    return Ok(new { message = "Success", responseStatus = 1, result = "Inserted Successfully" });
                 }
                 else
                 {
-                    return Ok(new { error = "Not inserted" });
+                    return Ok(new { message = "UnSuccess", responseStatus = 0, result = "Not inserted" });
                 }
             }
             catch (Exception ex)
@@ -156,7 +156,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpPost, Route("PersonalEducation")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult PersonalEducation(PersonalEduVO perEduVO)
         {
             UserDetailsModel umodel = new UserDetailsModel();
@@ -169,11 +169,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (count == "Inserted")
                 {
-                    return Ok(new { sucess = "Inserted Successfully" });
+                    return Ok(new { message = "Success", responseStatus = 1, result = "Inserted Successfully" });
                 }
                 else
                 {
-                    return Ok(new { error = "Not inserted" });
+                    return Ok(new { message = "UnSuccess", responseStatus = 0, result = "Not inserted" });
                 }
             }
             catch (Exception ex)
@@ -183,10 +183,11 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpPost, Route("PackageCupons")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult PackageCupons(int user_id, int package_id, string cupon_code)
         {
             UserDetailsModel umodel = new UserDetailsModel();
+            var info = "";
 
             try
             {
@@ -199,14 +200,14 @@ namespace NapelliWebAPI.Controllers
                 if (umodel.errorcode != 0)
                 {
                     return Ok(new { Error = umodel.error });
-                }
-                //else if (dt.Rows.Count == 1)
-                //{
-                //    return Ok(new { info = "Inserted Successfully" });
-                //}
+                }               
                 else
                 {
-                    return Ok(dt);
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        info = row["result"].ToString();
+                    }
+                    return Ok(new { message = "Success", responseStatus = 1, result = info });
                 }
             }
             catch (Exception ex)
@@ -216,7 +217,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpPost, Route("InsertImage")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult InsertImage(ImageVO iVO)
         {
             UserDetailsModel umodel = new UserDetailsModel();
@@ -229,11 +230,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (count == "Inserted")
                 {
-                    return Ok(new { sucess = "Inserted Successfully" });
+                    return Ok(new { message = "Success", responseStatus = 1, result = "Inserted Successfully" });
                 }
                 else
                 {
-                    return Ok(new { error = "Not inserted" });
+                    return Ok(new { message = "UnSuccess", responseStatus = 0, result = "Not inserted" });
                 }
             }
             catch (Exception ex)
@@ -243,7 +244,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GetCaste")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetCaste()
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -257,11 +258,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -270,14 +271,14 @@ namespace NapelliWebAPI.Controllers
             }
         }
         [HttpGet, Route("GetCities")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        public IActionResult GetCities()
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetCities(int stat_id)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
             DataTable dt = new DataTable();
             try
             {
-                dt = objUserMol.GetCities();
+                dt = objUserMol.GetCities(stat_id);
                 if (objUserMol.errorcode != 0)
                 {
                     return Ok(new { Error = objUserMol.error });
@@ -296,8 +297,35 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
+        [HttpGet, Route("GetCitie")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetCitie(int stat_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetCities(stat_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
+                }
+                else
+                {
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
         [HttpGet, Route("GetCountries")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetCountries()
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -311,11 +339,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -324,7 +352,7 @@ namespace NapelliWebAPI.Controllers
             }
         }
         [HttpGet, Route("GetDesgination")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetDesgination()
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -338,11 +366,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -352,7 +380,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GetLanguage")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetLanguage()
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -366,11 +394,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -380,7 +408,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GetQualification")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetQualification()
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -394,11 +422,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -408,7 +436,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GetRasi")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetRasi()
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -422,11 +450,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -435,7 +463,8 @@ namespace NapelliWebAPI.Controllers
             }
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpGet, Route("GetReligion")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetReligion()
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -449,11 +478,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -463,7 +492,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GetStar")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetStar()
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -477,11 +506,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -491,14 +520,14 @@ namespace NapelliWebAPI.Controllers
         }       
 
         [HttpGet, Route("GetStates")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        public IActionResult GetStates()
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetStates(int coun_id)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
             DataTable dt = new DataTable();
             try
             {
-                dt = objUserMol.GetStates();
+                dt = objUserMol.GetStates(coun_id);
                 if (objUserMol.errorcode != 0)
                 {
                     return Ok(new { Error = objUserMol.error });
@@ -510,6 +539,33 @@ namespace NapelliWebAPI.Controllers
                 else
                 {
                     return Ok(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+        [HttpGet, Route("GetState")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetState(int coun_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetStates(coun_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
+                }
+                else
+                {
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -519,14 +575,14 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GetSubCast")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        public IActionResult GetSubCast()
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetSubCast(int scaste_id)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
             DataTable dt = new DataTable();
             try
             {
-                dt = objUserMol.GetSubCast();
+                dt = objUserMol.GetSubCast(scaste_id);
                 if (objUserMol.errorcode != 0)
                 {
                     return Ok(new { Error = objUserMol.error });
@@ -537,7 +593,7 @@ namespace NapelliWebAPI.Controllers
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok( dt );
                 }
             }
             catch (Exception ex)
@@ -545,9 +601,36 @@ namespace NapelliWebAPI.Controllers
                 return Ok(new { Error = ex.Message });
             }
         }
-        
+        [HttpGet, Route("GetSubCasts")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetSubCasts(int scaste_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetSubCast(scaste_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
+                }
+                else
+                {
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
         [HttpGet, Route("GetPackage")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetPackage()
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -561,11 +644,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -575,7 +658,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GetPackageDetails")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetPackageDetails(int pack_id)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -589,11 +672,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -603,7 +686,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GetPackCoupCalculation")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetPackCoupCalculation(int pack_id, string coupCode)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -617,11 +700,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -631,7 +714,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GeneralSearch")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GeneralSearch(string gender, int age_from, int age_to, int religion)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -645,11 +728,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -660,23 +743,30 @@ namespace NapelliWebAPI.Controllers
 
         [HttpGet, Route("SendEmail")]
         //[Authorize(AuthenticationSchemes = "Bearer")]
-        public IActionResult SendEmail(string FromEmailID, string ToEmailIds, string subject, string htmlContent)
+        public IActionResult SendEmail(string ToEmailIds)
         {
+            string htmlContent = null;
+            UserDetailsModel umodel = new UserDetailsModel();
             SendGridModel email = new SendGridModel();
-            var result = email.SendEmail(FromEmailID, ToEmailIds, subject, htmlContent);
-            return Ok(new { info = result });
-            //if (result.IsCompleted == true)
-            //{
-            //    return Ok(new { info = "Mail not sent" });
-            //}
-            //else
-            //{
-            //    return Ok(new { info = "Mail sent successfully" });
-            //}           
+            DataTable dt = umodel.CheckMail(ToEmailIds, "");
+            if (dt.Rows.Count == 0)
+            {
+                return Ok(new { message = "UnSuccess", responseStatus = 0, result = "Mail not sent" });
+            }
+            else
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    ToEmailIds = row["email_id"].ToString();
+                    htmlContent = row["password"].ToString();
+                }
+                var status = email.Execute(ToEmailIds, htmlContent);
+                return Ok(new { message = "Success", responseStatus = 1, result = "Mail sent Successfully" });
+            }     
         }
 
         [HttpGet, Route("GetFamilyDetails")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetFamilyDetails(int user_id)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -690,11 +780,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -704,7 +794,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GetPersonalEducationalDetails")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetPersonalEducationalDetails(int user_id)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -718,11 +808,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -732,7 +822,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GetProfessionalDetails")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetProfessionalDetails(int user_id)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -746,11 +836,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -759,27 +849,26 @@ namespace NapelliWebAPI.Controllers
             }
         }
 
-
         [HttpGet, Route("GetPartnerPreferencesDetails")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetPartnerPreferencesDetails(int user_id)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
             DataTable dt = new DataTable();
             try
             {
-                dt = objUserMol.GetProfessionalDetails(user_id);
+                dt = objUserMol.GetPartnerPreferencesDetails(user_id);
                 if (objUserMol.errorcode != 0)
                 {
                     return Ok(new { Error = objUserMol.error });
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -789,7 +878,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GetImages")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetImages(int user_id)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -803,11 +892,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -817,7 +906,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("GetPackageCuponsDetails")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetPackageCuponsDetails(int user_id)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -831,11 +920,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -845,7 +934,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpPut, Route("UpdateFamily")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult UpdateFamily(FamilyVO fVO)
         {
             UserDetailsModel umodel = new UserDetailsModel();
@@ -858,11 +947,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (count == "Updated")
                 {
-                    return Ok(new { sucess = "Updated Successfully" });
+                    return Ok(new { message = "Success", responseStatus = 1, result = "Updated Successfully" });
                 }
                 else
                 {
-                    return Ok(new { error = "Not Updated" });
+                    return Ok(new { message = "UnSuccess", responseStatus = 0, result = "Not Updated" });
                 }
             }
             catch (Exception ex)
@@ -872,7 +961,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpPut, Route("UpdateProfessional")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult UpdateProfessional(ProfessionalVo pVO)
         {
             UserDetailsModel umodel = new UserDetailsModel();
@@ -885,11 +974,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (count == "Updated")
                 {
-                    return Ok(new { sucess = "Updated Successfully" });
+                    return Ok(new { message = "Success", responseStatus = 1, result = "Updated Successfully" });
                 }
                 else
                 {
-                    return Ok(new { error = "Not Updated" });
+                    return Ok(new { message = "UnSuccess", responseStatus = 0, result = "Not Updated" });
                 }
             }
             catch (Exception ex)
@@ -899,7 +988,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpPut, Route("UpdatePartnerPreference")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult UpdatePartnerPreference(PartnerPrefVO parVO)
         {
             UserDetailsModel umodel = new UserDetailsModel();
@@ -912,11 +1001,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (count == "Updated")
                 {
-                    return Ok(new { sucess = "Updated Successfully" });
+                    return Ok(new { message = "Success", responseStatus = 1, result = "Updated Successfully" });
                 }
                 else
                 {
-                    return Ok(new { error = "Not Updated" });
+                    return Ok(new { message = "UnSuccess", responseStatus = 0, result = "Not Updated" });
                 }
             }
             catch (Exception ex)
@@ -926,7 +1015,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpPut, Route("UpdatePersonalEdu")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult UpdatePersonalEdu(PersonalEduVO perEduVO)
         {
             UserDetailsModel umodel = new UserDetailsModel();
@@ -939,11 +1028,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (count == "Updated")
                 {
-                    return Ok(new { sucess = "Updated Successfully" });
+                    return Ok(new { message = "Success", responseStatus = 1, result = "Updated Successfully" });
                 }
                 else
                 {
-                    return Ok(new { error = "Not Updated" });
+                    return Ok(new { message = "UnSuccess", responseStatus = 0, result = "Not Updated" });
                 }
             }
             catch (Exception ex)
@@ -953,7 +1042,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpPut, Route("UpdateImage")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult UpdateImage(ImageVO iVO)
         {
             UserDetailsModel umodel = new UserDetailsModel();
@@ -966,11 +1055,11 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (count == "Updated")
                 {
-                    return Ok(new { sucess = "Updated Successfully" });
+                    return Ok(new { message = "Success", responseStatus = 1, result = "Updated Successfully" });
                 }
                 else
                 {
-                    return Ok(new { error = "Not Updated" });
+                    return Ok(new { message = "UnSuccess", responseStatus = 0, result = "Not Updated" });
                 }
             }
             catch (Exception ex)
@@ -980,7 +1069,7 @@ namespace NapelliWebAPI.Controllers
         }
 
         [HttpGet, Route("ViewProfile")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult ViewProfile(int user_id)
         {
             UserDetailsModel objUserMol = new UserDetailsModel();
@@ -994,11 +1083,94 @@ namespace NapelliWebAPI.Controllers
                 }
                 else if (dt.Rows.Count == 0)
                 {
-                    return Ok(new { info = "No Record found" });
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
                 }
                 else
                 {
-                    return Ok(dt);
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt } );
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+        [HttpGet, Route("GetPersonalEducationalEdit")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetPersonalEducationalEdit(int user_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetPersonalEducationalEdit(user_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
+                }
+                else
+                {
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpGet, Route("GetProfessionalEdit")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetProfessionalEdit(int user_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetProfessionalEdit(user_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
+                }
+                else
+                {
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { Error = ex.Message });
+            }
+        }
+
+        [HttpGet, Route("GetPartnerPreferencesEdit")]
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetPartnerPreferencesEdit(int user_id)
+        {
+            UserDetailsModel objUserMol = new UserDetailsModel();
+            DataTable dt = new DataTable();
+            try
+            {
+                dt = objUserMol.GetPartnerPreferencesEdit(user_id);
+                if (objUserMol.errorcode != 0)
+                {
+                    return Ok(new { Error = objUserMol.error });
+                }
+                else if (dt.Rows.Count == 0)
+                {
+                    return Ok(new { message = "No Records found", responseStatus = 0, result = dt });
+                }
+                else
+                {
+                    return Ok(new { message = "Success", responseStatus = 1, result = dt });
                 }
             }
             catch (Exception ex)
@@ -1007,4 +1179,5 @@ namespace NapelliWebAPI.Controllers
             }
         }
     }
+
 }

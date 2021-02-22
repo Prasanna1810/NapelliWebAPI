@@ -18,9 +18,10 @@ namespace NapelliWebAPI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            // Configuration = configuration;
+            Configuration = new ConfigurationBuilder().SetBasePath(env.ContentRootPath).AddJsonFile("appSettings.json").Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -62,6 +63,10 @@ namespace NapelliWebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
 
@@ -72,10 +77,19 @@ namespace NapelliWebAPI
             app.UseAuthentication();
 
             app.UseMvcWithDefaultRoute();
+            ConnectionString = Configuration.GetValue<string>("ConnectionStrings:DefaultConnection"); //Configuration["ConnectionStrings:DefaultConnection"];
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapControllers();
             //});
+        }
+        public static string ConnectionString
+        {
+
+            get;
+
+            private set;
+
         }
     }
 }

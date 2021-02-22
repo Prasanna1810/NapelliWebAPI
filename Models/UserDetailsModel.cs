@@ -15,13 +15,13 @@ namespace NapelliWebAPI.Models
         public string error { get; set; }
         public string Token { get; set; }
 
-        public DataTable UserLogin(UserRegisterVO urVO)
+        public DataTable UserLogin(UserRegisterVO rVO)
         {
             UserInfo uinfo = new UserInfo();
             User objUser = new User(uinfo);
             try
             {
-                DataTable dt = objUser.UserLogin(urVO);
+                DataTable dt = objUser.UserLogin(rVO);
                 if (objUser.status.errcode != 0)
                 {
                     errorcode = objUser.status.errcode;
@@ -265,13 +265,13 @@ namespace NapelliWebAPI.Models
                 return null;
             }
         }
-        public DataTable GetCities()
+        public DataTable GetCities(int stat_id)
         {
             UserInfo uinfo = new UserInfo();
             User objUser = new User(uinfo);
             try
             {
-                DataTable dt = objUser.GetCities();
+                DataTable dt = objUser.GetCities(stat_id);
                 if (objUser.status.errcode != 0)
                 {
                     errorcode = objUser.status.errcode;
@@ -465,13 +465,13 @@ namespace NapelliWebAPI.Models
                 return null;
             }
         }
-        public DataTable GetStates()
+        public DataTable GetStates(int coun_id)
         {
             UserInfo uinfo = new UserInfo();
             User objUser = new User(uinfo);
             try
             {
-                DataTable dt = objUser.GetStates();
+                DataTable dt = objUser.GetStates(coun_id);
                 if (objUser.status.errcode != 0)
                 {
                     errorcode = objUser.status.errcode;
@@ -490,13 +490,13 @@ namespace NapelliWebAPI.Models
                 return null;
             }
         }
-        public DataTable GetSubCast()
+        public DataTable GetSubCast(int scaste_id)
         {
             UserInfo uinfo = new UserInfo();
             User objUser = new User(uinfo);
             try
             {
-                DataTable dt = objUser.GetSubCast();
+                DataTable dt = objUser.GetSubCast(scaste_id);
                 if (objUser.status.errcode != 0)
                 {
                     errorcode = objUser.status.errcode;
@@ -915,5 +915,81 @@ namespace NapelliWebAPI.Models
                 return null;
             }
         }
+        public DataTable GetPersonalEducationalEdit(int user_id)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetPersonalEducationalEdit(user_id);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public DataTable GetProfessionalEdit(int user_id)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetProfessionalEdit(user_id);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+        public DataTable GetPartnerPreferencesEdit(int user_id)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetPartnerPreferencesEdit(user_id);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
+
     }
 }

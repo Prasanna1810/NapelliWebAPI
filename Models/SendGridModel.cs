@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using static NapelliFrameWork.StatusInfo;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace NapelliWebAPI.Models
 {
@@ -15,36 +16,43 @@ namespace NapelliWebAPI.Models
         public string error { get; set; }
         public int errorcode { get; set; }
 
-        public async Task SendEmail(string FromEmailID, string ToEmailIds, string subject, string htmlContent)
+        //public async Task<string> SendEmail(String ToEmailIds)
+        //{
+        //    string htmlContent = null;
+        //    UserDetailsModel umodel = new UserDetailsModel();
+        //    SendGridModel email = new SendGridModel();
+        //    DataTable dt = umodel.CheckMail(ToEmailIds, "");
+        //    foreach (DataRow row in dt.Rows)
+        //    {
+        //        ToEmailIds = row["email_id"].ToString();
+        //        htmlContent = row["password"].ToString();
+        //    }
+        //    var response = await email.Execute(ToEmailIds, htmlContent);
+        //    var status = response.ToString();
+        //    if (status == "Accepted")
+        //    {
+        //        return  "Mail sent successfully";
+        //    }
+        //    else
+        //    {
+        //        return "Not sent";
+        //    }
+        //}
+
+        public async Task Execute(string ToEmailIds, string htmlContent)
         {
-            // string subject1 = subject;
-            UserInfo uinfo = new UserInfo();
-
-            string htmlContent1 = HttpUtility.UrlDecode(htmlContent);
-            //Application app = new Application(uinfo);
-
-            //objsndmail.htmlContent = HttpUtility.UrlDecode(objsndmail.htmlContent);
-            //DataTable dtprofile = app.GetAllProfileOption();
-            //DataRow[] results = dtprofile.Select("profile_name = 'emailapikey' AND status = 'A'");
-            //string apiKey = null;
-            //foreach (DataRow row in results)
-            //{
-            //    apiKey = row["profile_desc"].ToString();
-            //}
-            var apiKey = "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";
-            // var apiKey = _configuration.GetSection("SENDGRID_API_KEY").Value;
+            //var apiKey = Environment.GetEnvironmentVariable("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");
+            var apiKey = "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";
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress(FromEmailID, "prasanna.a@vcrbizz.com");
-            List<EmailAddress> tos = new List<EmailAddress> { };
-            string[] toEmails = ToEmailIds.Split(new Char[] { ',', ';' });
-            for (int i = 0; i < toEmails.Length; i++)
-            {
-                tos.Add(new EmailAddress(toEmails[i]));
-            };
-            var displayRecipients = true; // set this to true if you want recipients to see each others mail id
-            var msg = MailHelper.CreateSingleEmailToMultipleRecipients(from, tos, subject, "", htmlContent1, displayRecipients);
-
+            var from = new EmailAddress("prasanna.a@vcrbizz.com", "VCR");
+            var subject = "Forgot Password";
+            var to = new EmailAddress(ToEmailIds, "Prasanna");
+            var htmlContent1 = "Password:" + "" + htmlContent;
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlContent1);
             var response = await client.SendEmailAsync(msg);
+            var status = response.StatusCode.ToString();
+            //return response.StatusCode;
         }
+
     }
 }
