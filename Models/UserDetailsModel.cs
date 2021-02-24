@@ -14,6 +14,9 @@ namespace NapelliWebAPI.Models
         public int errorcode { get; set; }
         public string error { get; set; }
         public string Token { get; set; }
+        public int user_id { get; set; }
+        public int pack_id { get; set; }
+        public string cupon_code { get; set; }
 
         public DataTable UserLogin(UserRegisterVO rVO)
         {
@@ -865,6 +868,31 @@ namespace NapelliWebAPI.Models
                 return null;
             }
         }
+        public DataTable UpdatePackageCupon(int user_id, int package_id, string cupon_code)
+        {
+            UserInfo uInfo = new UserInfo();
+            User uObj = new User(uInfo);
+            try
+            {
+                DataTable dt = uObj.UpdatePackageCupon(user_id, package_id, cupon_code);
+                if (uObj.status.errcode != 0)
+                {
+                    errorcode = uObj.status.errcode;
+                    error = uObj.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
         public string UpdateImage(ImageVO iVO)
         {
             UserInfo uInfo = new UserInfo();
@@ -990,6 +1018,30 @@ namespace NapelliWebAPI.Models
                 return null;
             }
         }
-
+        public DataTable GetUserInfo(int user_id)
+        {
+            UserInfo uinfo = new UserInfo();
+            User objUser = new User(uinfo);
+            try
+            {
+                DataTable dt = objUser.GetUserInfo(user_id);
+                if (objUser.status.errcode != 0)
+                {
+                    errorcode = objUser.status.errcode;
+                    error = objUser.status.errmesg;
+                    return null;
+                }
+                else
+                {
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                errorcode = -1;
+                error = ex.Message;
+                return null;
+            }
+        }
     }
 }
